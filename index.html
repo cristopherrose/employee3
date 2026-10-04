@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Project Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authView" class="auth">
+  <div class="auth-card">
+    <div class="logo"><img src="buildsafe-logo.png" alt="BUILDSAFE Logo" class="brand-logo"><h1>Employee Manager</h1><p id="authSubtitle">Sign in to your account</p></div>
+
+    <form id="loginForm">
+      <div class="form-group"><label>Email</label><input id="loginEmail" type="email" required placeholder="admin@example.com"></div>
+      <div class="form-group"><label>Password</label><input id="loginPassword" type="password" required placeholder="Password"></div>
+      <button class="btn btn-primary" style="width:100%">Login</button>
+      <div class="auth-switch">No account? <span class="link" onclick="showRegister()">Create one</span></div>
+    </form>
+
+    <form id="registerForm" class="hidden">
+      <div class="form-group"><label>Full Name</label><input id="regName" required placeholder="Your name"></div>
+      <div class="form-group"><label>Email</label><input id="regEmail" type="email" required placeholder="you@example.com"></div>
+      <div class="form-group"><label>Password</label><input id="regPassword" type="password" minlength="6" required placeholder="At least 6 characters"></div>
+      <button class="btn btn-primary" style="width:100%">Register</button>
+      <div class="auth-switch">Already have an account? <span class="link" onclick="showLogin()">Login</span></div>
+    </form>
+  </div>
+</div>
+
+<div id="appView" class="layout hidden">
+<aside id="sidebar" class="sidebar">
+  <div class="brand"><img src="buildsafe-logo.png" alt="BUILDSAFE Logo" class="sidebar-logo"><span>Employee Manager</span></div>
+  <nav class="nav">
+    <button class="active" onclick="showPage('dashboard',this)">🏠 Dashboard</button>
+    <button onclick="showPage('employees',this)">👥 Employees</button>
+    <button onclick="showPage('projects',this)">📁 Projects</button>
+    <button onclick="showPage('tasks',this)">✓ Tasks</button>
+    <button onclick="showPage('profile',this)">⚙ Profile</button>
+  </nav>
+  <button class="logout" onclick="logout()">Logout</button>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px"><button class="mobile-menu" onclick="toggleSidebar()">☰</button><h2 id="pageTitle">Dashboard</h2></div>
+    <div id="userName" style="font-weight:600"></div>
+  </div>
+
+  <section id="dashboard" class="page active">
+    <div class="cards">
+      <div class="card"><div class="stat-label">Employees</div><div class="stat-value" id="statEmployees">0</div></div>
+      <div class="card"><div class="stat-label">Projects</div><div class="stat-value" id="statProjects">0</div></div>
+      <div class="card"><div class="stat-label">Tasks</div><div class="stat-value" id="statTasks">0</div></div>
+      <div class="card"><div class="stat-label">Completed</div><div class="stat-value" id="statCompleted">0</div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="panel-head"><h3>Recent Projects</h3><button class="btn btn-primary" onclick="openProjectModal()">+ Project</button></div><div id="recentProjects"></div></div>
+      <div class="panel"><div class="panel-head"><h3>Recent Tasks</h3><button class="btn btn-primary" onclick="openTaskModal()">+ Task</button></div><div id="recentTasks"></div></div>
+    </div>
+  </section>
+
+  <section id="employees" class="page">
+    <div class="panel"><div class="panel-head"><h3>Employees</h3><button class="btn btn-primary" onclick="openEmployeeModal()">+ Add Employee</button></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Position</th><th>Status</th><th>Actions</th></tr></thead><tbody id="employeeTable"></tbody></table></div></div>
+  </section>
+
+  <section id="projects" class="page">
+    <div class="panel"><div class="panel-head"><h3>Projects</h3><button class="btn btn-primary" onclick="openProjectModal()">+ Add Project</button></div><div class="table-wrap"><table><thead><tr><th>Project</th><th>Manager</th><th>Deadline</th><th>Progress</th><th>Status</th><th>Actions</th></tr></thead><tbody id="projectTable"></tbody></table></div></div>
+  </section>
+
+  <section id="tasks" class="page">
+    <div class="panel"><div class="panel-head"><h3>Tasks</h3><button class="btn btn-primary" onclick="openTaskModal()">+ Add Task</button></div><div class="table-wrap"><table><thead><tr><th>Task</th><th>Project</th><th>Assigned To</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead><tbody id="taskTable"></tbody></table></div></div>
+  </section>
+
+  <section id="profile" class="page">
+    <div class="panel" style="max-width:600px"><h3 style="margin-bottom:18px">Profile</h3>
+      <div class="form-group"><label>Name</label><input id="profileName"></div>
+      <div class="form-group"><label>Email</label><input id="profileEmail" disabled></div>
+      <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </section>
+</main>
+</div>
+
+<div id="modal" class="modal"><div class="modal-box"><div class="modal-head"><h3 id="modalTitle"></h3><button class="close" onclick="closeModal()">×</button></div><div id="modalBody"></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
